@@ -1,3 +1,20 @@
+/*-----------------------------------------
+Student name: Chris Loewer
+Course: COSC 3403 - Software Engineering I
+Assignment: Implementation
+File name: MainActivity.java
+Program's Purpose: Android alarm clock that requires
+user to complete a scripture verse to turn off
+
+Class Purpose: The home screen of the app
+
+Development Computer: Intel 4790k chipset
+Operating System: Windows 8.1
+Integrated Development Environment (IDE): Eclipse
+Compiler: jdk 8.0_31
+Program's Operational Status: Working
+-----------------------------------------*/
+
 package com.soft_eng.scripturealarm;
 
 import java.util.List;
@@ -19,7 +36,6 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
 	
-	private static Alarm_t alarmOne;
 	AlarmAdapter aa;
 	Context context;
 	AlarmDBHelper dbHelper;
@@ -38,7 +54,6 @@ public class MainActivity extends Activity {
         
         // Start new activity when button is pressed
         addAlarmButton.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// -1 indicates it is a new alarm
@@ -47,7 +62,7 @@ public class MainActivity extends Activity {
 		});
         
         
-        // set listview
+        // set listview populated from db
         AlarmDBHelper dbHelper = new AlarmDBHelper(this);
         
         List<Alarm_t> alarms = dbHelper.getAlarms();
@@ -58,16 +73,13 @@ public class MainActivity extends Activity {
         
     }
     
-    public static Alarm_t getAlarm(){
-    	return alarmOne;
-    }
-    
     public void startAlarmDetailsActivity(long id){
     	Intent intent = new Intent(this, AlarmDetails.class);
     	intent.putExtra("id", id);
     	startActivityForResult(intent, 0);
     }
     
+    // When child activities finish
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
@@ -80,6 +92,7 @@ public class MainActivity extends Activity {
     		List<Alarm_t> alarms = dbHelper.getAlarms();
     		
     		// if aa hasn't been initialized because it was empty
+    		// TODO If the first alarm hasn't been initialized on start, this doesn't show
     		if(aa == null){
     			Log.d("myTag", "Initializing adapter because it wasn't earlier");
     			aa = new AlarmAdapter(this, R.layout.alarm_list_item, alarms);
@@ -92,6 +105,7 @@ public class MainActivity extends Activity {
     	
     }
     
+    // Called when delete button is clicked
     public void deleteAlarm(long id){
     	Log.d("myTag", "DeleteAlarm called in main activity");
     	final long alarmId = id;
