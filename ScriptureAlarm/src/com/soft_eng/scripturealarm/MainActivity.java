@@ -32,6 +32,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
@@ -60,6 +61,19 @@ public class MainActivity extends Activity {
 				startAlarmDetailsActivity(-1);
 			}
 		});
+
+// this block is for testing only , generates a reference toast to test DB
+        Button testScriptureButton = (Button)findViewById(R.id.test_scripture_button);
+        testScriptureButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbHelper = new AlarmDBHelper(context);
+                Scripture_t scripture = new Scripture_t();
+                scripture = dbHelper.getRandomVerse();
+
+                Toast.makeText(getApplicationContext(), scripture.reference, Toast.LENGTH_SHORT).show();
+            }
+        });
         
         
         // set listview populated from db
