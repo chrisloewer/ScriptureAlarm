@@ -20,6 +20,8 @@ package com.soft_eng.scripturealarm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager.WakeLock;
 import android.view.View;
@@ -27,30 +29,42 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class AlarmScreen extends Activity{
-	
-	//TODO Wakelock to wake device up from sleep for alarm
-	//TODO Override onPause, onResume to handle waking
-	//TODO Media Player to play the sound
-	// http://www.steventrigg.com/alarm-screen-wakelock-and-mediaplayer-create-an-alarm-clock-in-android-tutorial-part-7/
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		this.setContentView(R.layout.alarm_screen);
-		final Context context = this;
-		
-		Button stopAlarmButton = (Button)findViewById(R.id.alarm_off_button);
-		stopAlarmButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(context, "Stopping Alarm", Toast.LENGTH_SHORT).show();
-				finish();
-			}
-		});
-	}
+public class AlarmScreen extends Activity {
+
+    //TODO Wakelock to wake device up from sleep for alarm
+    //TODO Override onPause, onResume to handle waking
+    //TODO Media Player to play the sound
+    // http://www.steventrigg.com/alarm-screen-wakelock-and-mediaplayer-create-an-alarm-clock-in-android-tutorial-part-7/
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        this.setContentView(R.layout.alarm_screen);
+        final Context context = this;
+        Toast.makeText(context, "Media Time", Toast.LENGTH_SHORT).show();
+        final MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.alarmsound);
+
+        try {
+            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
+            mPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Button stopAlarmButton = (Button) findViewById(R.id.alarm_off_button);
+        stopAlarmButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Stopping Alarm", Toast.LENGTH_SHORT).show();
+                mPlayer.stop();
+                finish();
+            }
+        });
+    }
 
 }
