@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-// this block is for testing only , generates a reference toast to test DB
+/* this block is for testing only , generates a reference toast to test DB
         Button testScriptureButton = (Button)findViewById(R.id.test_scripture_button);
         testScriptureButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
                 Toast.makeText(getApplicationContext(), scripture.reference, Toast.LENGTH_SHORT).show();
             }
         });
-        
+*/
         
         // set listview populated from db
         AlarmDBHelper dbHelper = new AlarmDBHelper(this);

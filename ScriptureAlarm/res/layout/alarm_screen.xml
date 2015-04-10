@@ -2,21 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <TextView 
-        android:id="@+id/alarm_title"
+    android:orientation="vertical"
+    android:layout_margin="15sp">
+
+
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
-        android:text="ALARM"/>
-    
-    <Button 
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginBottom="15sp"
+        android:layout_marginTop="40sp"
+        android:text="Large Text"
+        android:id="@+id/pre_tv" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:id="@+id/user_input_et" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="15sp"
+        android:text="Large Text"
+        android:id="@+id/post_tv" />
+
+    <Button
         android:id="@+id/alarm_off_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="OK"/>
-    
+        android:layout_marginTop="15sp"
+        android:text="OK"
+        android:layout_gravity="center"/>
+
+
+
 
 </LinearLayout>

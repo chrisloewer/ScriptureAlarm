@@ -27,6 +27,8 @@ import android.os.PowerManager.WakeLock;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AlarmScreen extends Activity {
@@ -40,8 +42,37 @@ public class AlarmScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.setContentView(R.layout.alarm_screen);
+
+        TextView preTV = (TextView)findViewById(R.id.pre_tv);
+        TextView postTV = (TextView)findViewById(R.id.post_tv);
+        final EditText userInputET = (EditText)findViewById(R.id.user_input_et);
+
+        AlarmDBHelper dbHelper = new AlarmDBHelper(this);
+        Scripture_t scripture = new Scripture_t();
+        scripture = dbHelper.getRandomVerse();
+
+        // split verse into array, select one word, combine words before and after selected word
+
+        String[] slicedVerse = scripture.text.split("\\s"); //breaks verse into an array of strings
+
+        int randomIndex = (int) (Math.random()*slicedVerse.length); //chooses a random index
+
+//need to output verse with blank as a textbox
+        String pretext = scripture.reference + "\n";
+        String posttext ="";
+        final String droppedWord= slicedVerse[randomIndex];
+        for(int i=0; i <randomIndex; i++){
+            pretext +=slicedVerse[i] + " ";
+        }
+
+        for(int i=randomIndex+1; i <slicedVerse.length; i++){
+            posttext += slicedVerse[i] + " ";
+        }
+
+        preTV.setText(pretext);
+        postTV.setText(posttext);
+
         final Context context = this;
         Toast.makeText(context, "Media Time", Toast.LENGTH_SHORT).show();
         final MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.alarmsound);
@@ -49,7 +80,7 @@ public class AlarmScreen extends Activity {
         try {
             AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
-
+            mPlayer.setLooping(true);
             mPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,9 +91,19 @@ public class AlarmScreen extends Activity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Stopping Alarm", Toast.LENGTH_SHORT).show();
-                mPlayer.stop();
-                finish();
+
+                // Check user input
+                String userInput = (String) userInputET.getText().toString();
+
+                if(userInput.equals(droppedWord)) {
+
+                    Toast.makeText(context, "Stopping Alarm", Toast.LENGTH_SHORT).show();
+                    mPlayer.stop();
+                    finish();
+                }
+                else{
+                    Toast.makeText(context,"Incorrect", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
