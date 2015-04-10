@@ -40,7 +40,7 @@ public class AlarmDetails extends Activity{
 		
 		this.setContentView(R.layout.alarm_details);
 		
-		Toast.makeText(getApplicationContext(), "Activity 2 created", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "Activity 2 created", Toast.LENGTH_SHORT).show();
 		
 		// Initialization
 		context = this;
@@ -53,7 +53,7 @@ public class AlarmDetails extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "Clicked to close", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "Clicked to close", Toast.LENGTH_SHORT).show();
 				
                 finish();
 			}
@@ -65,7 +65,7 @@ public class AlarmDetails extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "Clicked to Save", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "Clicked to Save", Toast.LENGTH_SHORT).show();
 				updateAlarmDataInfo();
 				
 				AlarmManagerHelper.clearAlarms(context);
